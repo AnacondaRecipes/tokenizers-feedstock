@@ -1,5 +1,5 @@
 {% set name = "tokenizers" %}
-{% set version = "0.12.1" %}
+{% set version = "0.11.4" %}
 
 package:
   name: {{ name|lower }}
@@ -7,25 +7,27 @@ package:
 
 source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 070746f86efa6c873db341e55cf17bb5e7bdd5450330ca8eca542f5c3dab2c66
+  sha256: 62bfccd1de58d1372d3789f7ba2bbd5cd99cb5e799d5a70ffa8248d0fe4f7d81
 
 build:
-  number: 0
-  skip: True  # [py<35]
+  number: 1
+  skip: True  # [py<36]
   missing_dso_whitelist:
     - /usr/lib/libresolv.9.dylib  # [osx]
     - /usr/lib64/libgcc_s.so.1  # [linux]
   script:
-    - {{ PYTHON }} -m pip install . -vv
+    - {{ PYTHON }} -m pip install . -vv 
 
 requirements:
   build:
     - {{ compiler('cxx') }}
     - {{ compiler('rust') }}
+    # It's needed to find openssl
+    - pkg-config
   host:
     - python
     - pip
-    - setuptools-rust
+    - setuptools-rust >=0.11.3
     - setuptools
     - wheel
   run:
