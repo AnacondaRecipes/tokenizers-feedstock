@@ -15,6 +15,7 @@ build:
   missing_dso_whitelist:
     - /usr/lib/libresolv.9.dylib  # [osx]
     - /usr/lib64/libgcc_s.so.1  # [linux]
+    - $RPATH/ld64.so.1  # [s390x]
   script:
     - {{ PYTHON }} -m pip install . -vv 
 
@@ -30,7 +31,7 @@ requirements:
     - setuptools-rust >=0.11.3
     - setuptools
     - wheel
-    - openssl
+    - openssl # [linux]
   run:
     - python
 
