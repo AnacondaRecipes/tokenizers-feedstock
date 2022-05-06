@@ -1,5 +1,5 @@
 {% set name = "tokenizers" %}
-{% set version = "0.11.4" %}
+{% set version = "0.11.6" %}
 
 package:
   name: {{ name|lower }}
@@ -7,10 +7,10 @@ package:
 
 source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 62bfccd1de58d1372d3789f7ba2bbd5cd99cb5e799d5a70ffa8248d0fe4f7d81
+  sha256: 562b2022faf0882586c915385620d1f11798fc1b32bac55353a530132369a6d0
 
 build:
-  number: 1
+  number: 0
   skip: True  # [py<36 or win32 or (win64 and (rust_compiler == 'rust-gnu'))]
   missing_dso_whitelist:
     - /usr/lib/libresolv.9.dylib  # [osx]
