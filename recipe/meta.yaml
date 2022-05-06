@@ -1,5 +1,5 @@
 {% set name = "tokenizers" %}
-{% set version = "0.10.3" %}
+{% set version = "0.11.4" %}
 
 package:
   name: {{ name|lower }}
@@ -7,29 +7,31 @@ package:
 
 source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 1a5d3b596c6d3a237e1ad7f46c472d467b0246be7fd1a364f12576eb8db8f7e6
+  sha256: 62bfccd1de58d1372d3789f7ba2bbd5cd99cb5e799d5a70ffa8248d0fe4f7d81
 
 build:
   number: 1
+  skip: True  # [py<36 or win32 or (win64 and (rust_compiler == 'rust-gnu'))]
   missing_dso_whitelist:
     - /usr/lib/libresolv.9.dylib  # [osx]
     - /usr/lib64/libgcc_s.so.1  # [linux]
     - $RPATH/ld64.so.1  # [s390x]
   script:
-    - export PYO3_CROSS_LIB_DIR={{ PREFIX }}/lib  # [arm64]
-    - find {{ PREFIX }}/lib/python3.* -name "_sysconfigdata_*.py" -type f -not -name "_sysconfigdata_arm64_*.py" -delete  # [arm64]
-    - {{ PYTHON }} -m pip install . -vv
+    - {{ PYTHON }} -m pip install . -vv 
 
 requirements:
   build:
-    - python                                 # [build_platform != target_platform]
     - {{ compiler('cxx') }}
     - {{ compiler('rust') }}
+    # It's needed to find openssl
+    - pkg-config
   host:
     - python
     - pip
-    - setuptools-rust >=0.11.5
+    - setuptools-rust >=0.11.3
     - setuptools
+    - wheel
+    - openssl # [linux]
   run:
     - python
 
@@ -49,12 +51,13 @@ test:
     - pip
 
 about:
-  home: https://pypi.org/project/tokenizers/
+  home: https://github.com/huggingface/tokenizers
   license: Apache-2.0
-  license_family: APACHE
+  license_family: Apache
   license_file: LICENSE
   summary: Fast State-of-the-Art Tokenizers optimized for Research and Production
   dev_url: https://github.com/huggingface/tokenizers
+  doc_url: https://huggingface.co/docs/tokenizers/index
 
 extra:
   recipe-maintainers:
