@@ -1,5 +1,5 @@
 {% set name = "tokenizers" %}
-{% set version = "0.11.4" %}
+{% set version = "0.13.2" %}
 
 package:
   name: {{ name|lower }}
@@ -7,11 +7,11 @@ package:
 
 source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 62bfccd1de58d1372d3789f7ba2bbd5cd99cb5e799d5a70ffa8248d0fe4f7d81
+  sha256: f9525375582fd1912ac3caa2f727d36c86ff8c0c6de45ae1aaff90f87f33b907
 
 build:
-  number: 1
-  skip: True  # [py<36 or win32 or (win64 and (rust_compiler == 'rust-gnu'))]
+  number: 0
+  skip: True  # [py<35 or win32 or (win64 and (rust_compiler == 'rust-gnu'))]
   missing_dso_whitelist:
     - /usr/lib/libresolv.9.dylib  # [osx]
     - /usr/lib64/libgcc_s.so.1  # [linux]
@@ -28,7 +28,7 @@ requirements:
   host:
     - python
     - pip
-    - setuptools-rust >=0.11.3
+    - setuptools-rust
     - setuptools
     - wheel
     - openssl # [linux]
@@ -45,6 +45,7 @@ test:
     - tokenizers.processors
     - tokenizers.trainers
     - tokenizers.implementations
+    - tokenizers.tools
   commands:
     - pip check
   requires:
@@ -56,6 +57,9 @@ about:
   license_family: Apache
   license_file: LICENSE
   summary: Fast State-of-the-Art Tokenizers optimized for Research and Production
+  description: |
+    Provides an implementation of today's most used tokenizers, with a focus on 
+    performance and versatility.
   dev_url: https://github.com/huggingface/tokenizers
   doc_url: https://huggingface.co/docs/tokenizers/index
 
