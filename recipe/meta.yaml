@@ -17,7 +17,7 @@ build:
     - /usr/lib64/libgcc_s.so.1  # [linux]
     - $RPATH/ld64.so.1  # [s390x]
   script:
-    - {{ PYTHON }} -m pip install . -vv 
+    - {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vvv
 
 requirements:
   build:
