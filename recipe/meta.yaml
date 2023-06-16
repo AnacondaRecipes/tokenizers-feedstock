@@ -34,7 +34,7 @@ requirements:
     - openssl {{ openssl }} # [linux]
   run:
     - python
-    - openssl 3.* # [linux]
+    - openssl # [linux]
 
 test:
   imports:
