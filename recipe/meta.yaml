@@ -10,7 +10,7 @@ source:
   sha256: 2e546dbb68b623008a5442353137fbb0123d311a6d7ba52f2667c8862a75af2e
 
 build:
-  number: 1
+  number: 0
   skip: True  # [py<35 or win32 or (win64 and (rust_compiler == 'rust-gnu'))]
   missing_dso_whitelist:
     - /usr/lib/libresolv.9.dylib  # [osx]
