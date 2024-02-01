@@ -1,5 +1,5 @@
 {% set name = "tokenizers" %}
-{% set version = "0.13.3" %}
+{% set version = "0.15.1" %}
 
 package:
   name: {{ name|lower }}
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 2e546dbb68b623008a5442353137fbb0123d311a6d7ba52f2667c8862a75af2e
+  sha256: c0a331d6d5a3d6e97b7f99f562cee8d56797180797bc55f12070e495e717c980
 
 build:
   number: 0
@@ -32,9 +32,11 @@ requirements:
     - setuptools
     - wheel
     - openssl {{ openssl }} # [linux]
+    - maturin
   run:
     - python
     - openssl # [linux]
+    - huggingface_hub
 
 test:
   imports:
@@ -47,6 +49,7 @@ test:
     - tokenizers.trainers
     - tokenizers.implementations
     - tokenizers.tools
+    - huggingface_hub
   commands:
     - pip check
   requires:
