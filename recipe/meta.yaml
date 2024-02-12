@@ -30,7 +30,7 @@ requirements:
     - pip
     - setuptools-rust
     - openssl {{ openssl }} # [linux]
-    - maturin
+    - maturin >=1.0,<2.0
   run:
     - python
     - openssl # [linux]
