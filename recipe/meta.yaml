@@ -34,7 +34,7 @@ requirements:
   run:
     - python
     - openssl # [linux]
-    - huggingface_hub
+    - huggingface_hub >=0.16.4,<1.0
 
 test:
   imports:
