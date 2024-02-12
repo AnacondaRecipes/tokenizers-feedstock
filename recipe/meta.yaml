@@ -29,8 +29,6 @@ requirements:
     - python
     - pip
     - setuptools-rust
-    - setuptools
-    - wheel
     - openssl {{ openssl }} # [linux]
     - maturin
   run:
