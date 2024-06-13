@@ -1,0 +1,6 @@
+[submodule "tokenizers-feedstock" ]
+    path = include/foo
+    branch = master
+	url = ../tokenizers-feedstock
+
+
