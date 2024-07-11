@@ -53,7 +53,8 @@ test:
   commands:
     - pip check
     - cd bindings/python
-    - pytest tests --ignore="tests/documentation" -k "not test_continuing_prefix_trainer_mistmatch"
+    # tests require multiprocessing with fork, which is not available on Windows.
+    - pytest tests --ignore="tests/documentation" -k "not test_continuing_prefix_trainer_mistmatch"  # [not win]
   requires:
     - pip
     - pytest
