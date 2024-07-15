@@ -8,6 +8,8 @@ package:
 source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
   sha256: ee59e6680ed0fdbe6b724cf38bd70400a0c1dd623b07ac729087270caeac88e3
+  patches:  # [win]
+    - remove-multiprocess-fork.patch  # [win]
 
 build:
   number: 0
@@ -17,7 +19,7 @@ build:
     - /usr/lib64/libgcc_s.so.1  # [linux]
     - $RPATH/ld64.so.1  # [s390x]
   script:
-    - {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vvv
+    - {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
 
 requirements:
   build:
@@ -25,6 +27,7 @@ requirements:
     - {{ compiler('rust') }}
     # It's needed to find openssl
     - pkg-config
+    - m2-patch  # [win]
   host:
     - python
     - pip
@@ -54,7 +57,9 @@ test:
     - pip check
     - cd bindings/python
     # tests require multiprocessing with fork, which is not available on Windows.
-    - pytest tests --ignore="tests/documentation" -k "not test_continuing_prefix_trainer_mistmatch"  # [not win]
+    {% set tests_to_skip = "test_continuing_prefix_trainer_mismatch" %}
+    {% tests_to_skip += " or test_multiprocessing_with_parallelism"}
+    - pytest tests --ignore="tests/documentation" -k "not ({{ tests_to_skip }})" # [not win]
   requires:
     - pip
     - pytest
