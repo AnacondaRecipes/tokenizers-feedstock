@@ -58,7 +58,7 @@ test:
     - cd bindings/python
     # tests require multiprocessing with fork, which is not available on Windows.
     {% set tests_to_skip = "test_continuing_prefix_trainer_mismatch" %}
-    {% tests_to_skip = tests_to_skip + " or test_multiprocessing_with_parallelism" %}  # [win]
+    {% set tests_to_skip = tests_to_skip + " or test_multiprocessing_with_parallelism" %}  # [win]
     - pytest tests --ignore="tests/documentation" -k "not ({{ tests_to_skip }})"
   requires:
     - pip
