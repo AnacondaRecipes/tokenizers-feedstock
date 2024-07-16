@@ -1,5 +1,5 @@
 {% set name = "tokenizers" %}
-{% set version = "0.15.1" %}
+{% set version = "0.19.1" %}
 
 package:
   name: {{ name|lower }}
@@ -7,7 +7,9 @@ package:
 
 source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: c0a331d6d5a3d6e97b7f99f562cee8d56797180797bc55f12070e495e717c980
+  sha256: ee59e6680ed0fdbe6b724cf38bd70400a0c1dd623b07ac729087270caeac88e3
+  patches:  # [win]
+    - remove-multiprocess-fork.patch  # [win]
 
 build:
   number: 0
@@ -17,7 +19,7 @@ build:
     - /usr/lib64/libgcc_s.so.1  # [linux]
     - $RPATH/ld64.so.1  # [s390x]
   script:
-    - {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vvv
+    - {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
 
 requirements:
   build:
@@ -25,6 +27,7 @@ requirements:
     - {{ compiler('rust') }}
     # It's needed to find openssl
     - pkg-config
+    - m2-patch  # [win]
   host:
     - python
     - pip
@@ -36,6 +39,9 @@ requirements:
     - huggingface_hub >=0.16.4,<1.0
 
 test:
+  source_files:
+    - bindings/python/tests
+    - bindings/python/conftest.py
   imports:
     - tokenizers
     - tokenizers.models
@@ -49,8 +55,17 @@ test:
     - huggingface_hub
   commands:
     - pip check
+    - cd bindings/python
+    # tests require multiprocessing with fork, which is not available on Windows.
+    - pytest tests --ignore="tests/documentation" -k "not test_continuing_prefix_trainer_mistmatch"  # [not win]
+    - pytest tests --ignore="tests/documentation" -k "not (test_continuing_prefix_trainer_mistmatch or test_multiprocessing_with_parallelism)" # [win]
   requires:
     - pip
+    - pytest
+    - requests
+    - numpy
+    - datasets
+    - ruff
 
 about:
   home: https://github.com/huggingface/tokenizers

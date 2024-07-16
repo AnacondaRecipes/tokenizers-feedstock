@@ -1,0 +1,26 @@
+diff --git a/bindings/python/tests/bindings/test_tokenizer.py b/bindings/python/tests/bindings/test_tokenizer.py
+index 3d04960..95895a4 100644
+--- a/bindings/python/tests/bindings/test_tokenizer.py
++++ b/bindings/python/tests/bindings/test_tokenizer.py
+@@ -9,7 +9,7 @@ from tokenizers.models import BPE, Model, Unigram
+ from tokenizers.pre_tokenizers import ByteLevel
+ from tokenizers.processors import RobertaProcessing
+ 
+-from ..utils import bert_files, data_dir, multiprocessing_with_parallelism, roberta_files
++from ..utils import bert_files, data_dir, roberta_files
+ 
+ 
+ class TestAddedToken:
+diff --git a/bindings/python/tests/utils.py b/bindings/python/tests/utils.py
+index 0d497e6..6f44421 100644
+--- a/bindings/python/tests/utils.py
++++ b/bindings/python/tests/utils.py
+@@ -90,7 +90,7 @@ def doc_pipeline_bert_tokenizer(data_dir):
+ 
+ 
+ # On MacOS Python 3.8+ the default was modified to `spawn`, we need `fork` in tests.
+-mp.set_start_method("fork")
++# mp.set_start_method("fork")
+ 
+ 
+ def multiprocessing_with_parallelism(tokenizer, enabled: bool):
