@@ -1,5 +1,5 @@
 {% set name = "tokenizers" %}
-{% set version = "0.19.1" %}
+{% set version = "0.20.1" %}
 
 package:
   name: {{ name|lower }}
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: ee59e6680ed0fdbe6b724cf38bd70400a0c1dd623b07ac729087270caeac88e3
+  sha256: 84edcc7cdeeee45ceedb65d518fffb77aec69311c9c8e30f77ad84da3025f002
   patches:  # [win]
     - remove-multiprocess-fork.patch  # [win]
 
@@ -16,8 +16,8 @@ build:
   skip: True  # [py<37]
   missing_dso_whitelist:
     - /usr/lib/libresolv.9.dylib  # [osx]
-    - /usr/lib64/libgcc_s.so.1  # [linux]
-    - $RPATH/ld64.so.1  # [s390x]
+    - /usr/lib64/libgcc_s.so.1    # [linux]
+    - $RPATH/ld64.so.1            # [s390x]
   script:
     - {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
 
@@ -31,11 +31,11 @@ requirements:
   host:
     - python
     - pip
-    - openssl {{ openssl }} # [linux]
+    - openssl {{ openssl }}  # [linux]
     - maturin >=1.0,<2.0
   run:
     - python
-    - openssl # [linux]
+    - openssl  # [linux]
     - huggingface_hub >=0.16.4,<1.0
 
 test:
@@ -65,7 +65,6 @@ test:
     - requests
     - numpy
     - datasets
-    - ruff
 
 about:
   home: https://github.com/huggingface/tokenizers
