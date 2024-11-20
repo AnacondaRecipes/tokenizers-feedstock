@@ -12,7 +12,7 @@ source:
     - remove-multiprocess-fork.patch  # [win]
 
 build:
-  number: 0
+  number: 1
   skip: True  # [py<37]
   missing_dso_whitelist:
     - /usr/lib/libresolv.9.dylib  # [osx]
