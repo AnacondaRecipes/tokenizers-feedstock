@@ -1,0 +1,7 @@
+# Could not solve for environment specs
+# The following packages are incompatible
+# ├─ gxx_linux-64 =14.3.0 * is requested and can be installed;
+# └─ rust_linux-64 =1.89.0 * is not installable because it requires
+#    └─ gxx_linux-64 =11.2.0 *, which conflicts with any installable versions previously reported.
+cxx_compiler_version:      # [linux]
+  - 11.2.0                 # [linux]
