@@ -19,6 +19,7 @@ build:
     - /usr/lib/libresolv.9.dylib  # [osx]
     - /usr/lib64/libgcc_s.so.1  # [linux]
   script:
+    - cd bindings/python
     - {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
 
 requirements:
