@@ -1,24 +1,25 @@
 {% set name = "tokenizers" %}
-{% set version = "0.22.1" %}
+{% set version = "0.22.2" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 61de6522785310a309b3407bac22d99c4db5dba349935e99e4d15ea2226af2d9
+  # v0.22.2 is not released on PyPI yet
+  url: https://github.com/huggingface/{{ name }}/archive/refs/tags/v{{ version }}.tar.gz
+  sha256: ea401ee4db62dfd59c29d9d8c117d03263eb41a6d52b33d129b8d0d15c2c68cb
   patches:  # [win]
     - remove-multiprocess-fork.patch  # [win]
 
 build:
   number: 0
-  skip: True  # [py<39]
+  skip: true  # [py<39]
   missing_dso_whitelist:
     - /usr/lib/libresolv.9.dylib  # [osx]
-    - /usr/lib64/libgcc_s.so.1    # [linux]
-    - $RPATH/ld64.so.1            # [s390x]
+    - /usr/lib64/libgcc_s.so.1  # [linux]
   script:
+    - cd bindings/python
     - {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
 
 requirements:
@@ -58,13 +59,13 @@ test:
     - cd bindings/python
     # tests require multiprocessing with fork, which is not available on Windows.
     - pytest tests --ignore="tests/documentation" -k "not test_continuing_prefix_trainer_mistmatch"  # [not win]
-    - pytest tests --ignore="tests/documentation" -k "not (test_continuing_prefix_trainer_mistmatch or test_multiprocessing_with_parallelism)" # [win]
+    - pytest tests --ignore="tests/documentation" -k "not (test_continuing_prefix_trainer_mistmatch or test_multiprocessing_with_parallelism)"  # [win]
   requires:
     - pip
     - pytest
     - requests
     - numpy
-    - datasets
+    - datasets >=4.4.0
     - pytest-asyncio
 
 about:
@@ -74,7 +75,7 @@ about:
   license_file: LICENSE
   summary: Fast State-of-the-Art Tokenizers optimized for Research and Production
   description: |
-    Provides an implementation of today's most used tokenizers, with a focus on 
+    Provides an implementation of today's most used tokenizers, with a focus on
     performance and versatility.
   dev_url: https://github.com/huggingface/tokenizers
   doc_url: https://huggingface.co/docs/tokenizers/index
