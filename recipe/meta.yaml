@@ -13,7 +13,7 @@ source:
     - remove-multiprocess-fork.patch  # [win]
 
 build:
-  number: 0
+  number: 1
   skip: true  # [py<39]
   missing_dso_whitelist:
     - /usr/lib/libresolv.9.dylib  # [osx]
@@ -37,7 +37,7 @@ requirements:
   run:
     - python
     - openssl  # [linux]
-    - huggingface_hub >=0.16.4,<1.0
+    - huggingface_hub >=0.16.4,<2.0
 
 test:
   source_files:
