@@ -6,9 +6,8 @@ package:
   version: {{ version }}
 
 source:
-  # v0.22.2 is not released on PyPI yet
-  url: https://github.com/huggingface/{{ name }}/archive/refs/tags/v{{ version }}.tar.gz
-  sha256: ea401ee4db62dfd59c29d9d8c117d03263eb41a6d52b33d129b8d0d15c2c68cb
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 473b83b915e547aa366d1eee11806deaf419e17be16310ac0a14077f1e28f917
   patches:  # [win]
     - remove-multiprocess-fork.patch  # [win]
 
@@ -19,7 +18,6 @@ build:
     - /usr/lib/libresolv.9.dylib  # [osx]
     - /usr/lib64/libgcc_s.so.1  # [linux]
   script:
-    - cd bindings/python
     - {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
 
 requirements:
