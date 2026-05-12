@@ -1,19 +1,19 @@
 {% set name = "tokenizers" %}
-{% set version = "0.22.2" %}
+{% set version = "0.23.1" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 473b83b915e547aa366d1eee11806deaf419e17be16310ac0a14077f1e28f917
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 1feeeadf865a7915adc25445dea30e9933e593c31bb96c277cee36de227c8bfa
   patches:  # [win]
     - remove-multiprocess-fork.patch  # [win]
 
 build:
-  number: 1
-  skip: true  # [py<39]
+  number: 0
+  skip: true  # [py<310]
   missing_dso_whitelist:
     - /usr/lib/libresolv.9.dylib  # [osx]
     - /usr/lib64/libgcc_s.so.1  # [linux]
