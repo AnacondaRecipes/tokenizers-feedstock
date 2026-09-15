@@ -1,5 +1,5 @@
 {% set name = "tokenizers" %}
-{% set version = "0.23.1" %}
+{% set version = "0.23.2" %}
 
 package:
   name: {{ name|lower }}
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 1feeeadf865a7915adc25445dea30e9933e593c31bb96c277cee36de227c8bfa
+  sha256: 7f0f085686b9de0d0079e6f874ae053600db64c5d13049e0bbc0119926d25aac
   patches:  # [win]
     - remove-multiprocess-fork.patch  # [win]
 
