@@ -1,5 +1,5 @@
 {% set name = "tokenizers" %}
-{% set version = "0.23.2" %}
+{% set version = "0.23.3" %}
 
 package:
   name: {{ name }}
@@ -7,12 +7,12 @@ package:
 
 source:
   url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 7f0f085686b9de0d0079e6f874ae053600db64c5d13049e0bbc0119926d25aac
+  sha256: cded33237c77caeef62944d32aa9a7ef42bdce2b3497e18d137e072a8c4be438
   patches:  # [win]
     - remove-multiprocess-fork.patch  # [win]
 
 build:
-  number: 1
+  number: 0
   skip: true  # [py<310]
   missing_dso_whitelist:
     - /usr/lib/libresolv.9.dylib  # [osx]
